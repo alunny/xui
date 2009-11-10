@@ -5,8 +5,40 @@
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link type="text/css" rel="stylesheet" href="JSSpec.css" />
 	<script type="text/javascript" src="../lib/xui.js"></script>
+	<script type="text/javascript" src="sizzle.js"></script>
 	<script>
-		xui.extend(null);
+		xui.extend({
+				find: function(q) {
+					var ele = [];
+					var qlen = q.length;
+
+		      var list, size;
+		      var i, j;
+					for(i = 0; i < qlen; i++ ) {
+						if (typeof q[i] == 'string' ) { // one selector
+							list = document.querySelectorAll ? document.querySelectorAll(q[i]) : Sizzle(q[i]);
+							size = list.length;
+							for(j = 0; j < size; j++ ) {
+								ele.push(list[j]);
+							}
+						} else {
+							if (q[i] instanceof Array) { // an array of selectors
+								for (var x = 0; x < q[i].length; x++) {
+									list = document.querySelectorAll ? document.querySelectorAll(q[i][x]) : Sizzle(q[i][x]);
+									size = list.length;
+									for(j = 0; j < size; j++ ) {
+										ele.push(list[j]);
+									}
+								}
+							} else {
+								ele.push(q[i]);	// an element
+							}
+						}
+					}
+					this.elements = this.elements.concat(this.reduce(ele));
+					return this;
+				}			
+		});
 	</script>
 	<script type="text/javascript" src="JSSpec.js"></script>
 	<style type="text/css">
