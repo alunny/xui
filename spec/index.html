@@ -354,6 +354,28 @@ describe( 'xui extend', {
 	
 });
 
+describe(  'xui first child', {
+	'before':function(){
+		var m = document.createElement("ul");
+		m.id = "unordered_list";
+		m.style = "display: none";
+		document.getElementsByTagName("body")[0].appendChild(m);
+		var n = document.createElement("li");
+		n.innerHTML = "AAA";
+		m.appendChild(n);
+		var o = document.createElement("li");
+		o.innerHTML = "BBB";
+		m.appendChild(o);
+	},
+	
+	'should have element.firstChild':function() {
+		value_of(x$("#unordered_list").elements[0].firstChild.innerHTML).should_be("AAA");
+	},
+	
+	'should have element.children[0]':function() {
+		value_of(x$("#unordered_list").elements[0].children[0].innerHTML).should_be("AAA");
+	},
+});
 
 
 // ]]>
