@@ -217,7 +217,7 @@ describe("Dom.html", {
   'before':function(){
 		inner  = x$('#html-test-inner');
 		outer  = x$('#html-test-outer');
-		top    = x$('#html-test-top');
+		topp    = x$('#html-test-top');
 		bottom = x$('#html-test-bottom');
 		h = x$('#html-test-html');
 	},
@@ -243,8 +243,8 @@ describe("Dom.html", {
 	},
 	
 	'should insert html into the #html-test-top node':function(){
-		top.html('top', '<div>come out on top</div>');
-		value_of(top.first().children[0].innerHTML).should_be('come out on top'); 
+		topp.html('top', '<div>come out on top</div>');
+		value_of(topp.first().children[0].innerHTML).should_be('come out on top'); 
 	},
 	
 	'should insert html into the #html-test-bottom node':function(){
@@ -412,7 +412,7 @@ describe(  'xui first child', {
 <div id="dom_tests">
 	<div id="html-test-inner"></div>
 	<div id="html-test-outer"></div>
-	<div id="html-test-top"></div>
+	<div id="html-test-top"><p>foo</p></div>
 	<div id="html-test-bottom"></div>
 	<div id="html-test-html"><p>foo</p></div>
 </div>
