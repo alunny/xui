@@ -290,6 +290,7 @@ describe("XHR.function", {
 	
 	'should insert partial into element':function(){
 	  x.xhr("example.html");
+			alert(document.getElementById('xhr-test-function').innerHTML);
     value_of(document.getElementById('xhr-test-function').innerHTML).should_be('<h1>this is a html partial</h1>')
 	}
 	
