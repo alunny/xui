@@ -28,8 +28,9 @@ CoreTests.prototype.run = function () {
             equals(x.has(".foo").length, 2, 'Should return number of elements after including a specific class as defined in markup');
         });
         test( '.not()', function(){
-            expect(1);
+            expect(2);
             equals(x.not(".foo").length, 3, 'Should return number of elements after omitting a specific class as defined in markup');
+            equals(x.not(".not_in_dom").length, 5, 'Should return all elements after omitting a specific class that doesn\'t exist');
         });
     
     module("Base (base.js)", {
@@ -225,10 +226,19 @@ CoreTests.prototype.run = function () {
             equals(topTest[0].childNodes.length, numOriginalElements+1, 'Existing element inside selected element should remain after a "top" insertion');
         });
         test( 'Inserting html via "bottom"', function(){
+            // Base case
             var numOriginalElements = bottom[0].childNodes.length;
             bottom.html('bottom', '<div>undertow</div>');
             equals(bottom[0].childNodes[numOriginalElements].innerHTML, 'undertow', 'Should create a new element at tail of element\'s childNodes'); 
             equals(bottom[0].childNodes.length, numOriginalElements+1, 'Existing element inside selected element should remain after a "bottom" insertion');
+            
+            // Test with complex attributes.
+            numOriginalElements = bottom[0].childNodes.length;
+            bottom.html('bottom', '<p id="this-is-a-test" style="font-size:12px;color:red;">hi</p>');
+            equals(bottom[0].childNodes[numOriginalElements].innerHTML, 'hi', 'Should create a new element at tail of element\'s childNodes'); 
+            equals(bottom[0].childNodes.length, numOriginalElements+1, 'Existing elements inside selected element should remain after a "bottom" insertion');
+
+            // Numerous sibling elements test.
             numOriginalElements = bottom[0].childNodes.length;
             var numerousItems = '' +
               '<a href="#1" class="link_o">one link</a>' +
@@ -317,7 +327,7 @@ CoreTests.prototype.run = function () {
         x.xhr("helpers/example.html", {
             callback:function() {
                 ok(true, 'Specified callback function should be triggered properly');
-                equals(x[0].innerHTML,'','Defined callback should override default behaviour of injecting response into innerHTML');
+                equals(x$('#xhr-test-function')[0].innerHTML,'','Defined callback should override default behaviour of injecting response into innerHTML');
                 QUnit.start();
             }
         });
